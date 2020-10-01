@@ -25,11 +25,14 @@ class AdminController extends AbstractController
 
         /**
      * @Route("/admin/addNewProduct", name="addNewProduct")
+     * @Route("/admin/editProduct/{id}", name="editProduct", methods="GET|POST")
      */
-    public function addNewProduct(Product $product = null, Request $request, EntityManagerInterface $entityManagerInterface)
+    public function editProduct(Product $product = null, Request $request, EntityManagerInterface $entityManagerInterface)
     {
-        $product = new Product();
-        $product->setCreatedAt(new \DateTime());
+        if (!$product) {
+            $product = new Product();
+            $product->setCreatedAt(new \DateTime());
+        }
         $formProduct = $this->createForm(ProductType::class, $product);
         $formProduct->handleRequest($request);
         if ($formProduct->isSubmitted() && $formProduct->isValid()) {
@@ -41,5 +44,17 @@ class AdminController extends AbstractController
             'product' => $product,
             'formP' => $formProduct->createView(),
         ]);
+    }
+
+            /**
+     * @Route("/admin/removeProduct/{id}", name="removeProduct", methods="SUP")
+     */
+    public function addNewProduct(Product $product = null, Request $request, EntityManagerInterface $entityManagerInterface)
+    {
+        if ($this->isCsrfTokenValid("SUP" . $product->getid(), $request->get('_token'))) {
+            $entityManagerInterface->remove($product);
+            $entityManagerInterface->flush();
+            return $this->redirectToRoute("admin");
+        }
     }
 }
