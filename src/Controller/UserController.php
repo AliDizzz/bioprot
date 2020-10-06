@@ -48,4 +48,12 @@ class UserController extends AbstractController
         ]);
 
     }
+
+        /**
+     * @Route("/logout", name="logout")
+     */
+    public function logout()
+    {
+        throw new \Exception('This should never be reached!');
+    }
 }

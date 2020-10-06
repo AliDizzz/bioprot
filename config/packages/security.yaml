@@ -26,7 +26,9 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 # Page où redidiriger l'utilisateur après s'être correctement connecté:
                 default_target_path: home
-
+            logout:
+                path: logout
+                target: home
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
