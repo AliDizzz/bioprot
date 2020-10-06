@@ -3,18 +3,43 @@
 {% block title %}Hello ProductController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/yildi/Desktop/bioprot/src/Controller/ProductController.php'|file_link(0) }}">src/Controller/ProductController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/yildi/Desktop/bioprot/templates/product/index.html.twig'|file_link(0) }}">templates/product/index.html.twig</a></code></li>
-    </ul>
-</div>
+		<section class=" my-5 container productslist">
+			<div class="row">
+				{% for product in products %}
+					<div class="col-lg-4 col-md-6 mb-5 text-center ">
+						<div class="card h-100 shadow">
+							<a href="#"><img class="card-img-top img-fluid mx-auto imgAllProd" src="{{asset('images/products/' ~ product.image)}}" alt="{{product.name}}"></a>
+							<div class="card-body">
+								<h4 class="card-title">
+									<a href="{{path('onceProduct',{'id': product.id})}}">{{product.name}}
+										{{product.weight}}gr</a>
+								</h4>
+								<h5>Prix:
+									{{product.price| format_currency('EUR') }}</h5>
+								<p class="card-text text-justify">{{ product.description|length >200 ? product.description|slice(0, 200) ~ ' ...' : product.description  }}</p>
+								{% if product.stock == 0 %}
+									<p class="alert alert-warning" role="alert">
+										Patience, il va bientôt revenir.
+									</p>
+								{% elseif product.stock <= 5 %}
+									<p class="alert alert-danger" role="alert">
+										Attention il ne reste plus que
+										{{product.stock}}
+										pots!
+									</p>
+								{% endif %}
+							</div>
+							<div class="card-footer d-flex justify-content-center">
+								{% if product.stock ==0 %}
+									<button type="button" class="btn shadow btn-colorPrimary" disabled>Non disponible actuellement</button>
+								{% else %}
+									<a href="#" class="btn shadow btn-colorPrimary">Ajouter au panier</a>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</section>
+		{# Product List display end #}
 {% endblock %}
