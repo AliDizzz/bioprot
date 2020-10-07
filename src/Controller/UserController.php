@@ -16,12 +16,12 @@ class UserController extends AbstractController
     /**
      * @Route("/createUser", name="creatUser")
      */
-    public function createUser( Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordEncoderInterface $userPasswordEncoderInterface)
+    public function createUser(Request $request, EntityManagerInterface $entityManagerInterface, UserPasswordEncoderInterface $userPasswordEncoderInterface)
     {
         $user = new User();
-        $formUser = $this->createForm(UserType::class,$user);
+        $formUser = $this->createForm(UserType::class, $user);
         $formUser->handleRequest($request);
-        if( $formUser->isSubmitted() && $formUser->isValid()){
+        if ($formUser->isSubmitted() && $formUser->isValid()) {
             $encoder = $userPasswordEncoderInterface->encodePassword($user, $user->getPassword());
             $user->setPassword($encoder);
             $user->setRoles('ROLE_USER');
@@ -36,20 +36,19 @@ class UserController extends AbstractController
     }
 
 
-        /**
+    /**
      * @Route("/loginUser", name="loginUser")
      */
-    public function loginUser( AuthenticationUtils $authenticationUtils)
+    public function loginUser(AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         return $this->render('user/login.html.twig', [
             'lastUserName' => $authenticationUtils->getLastUsername(),
             'error' => $error !== null,
         ]);
-
     }
 
-        /**
+    /**
      * @Route("/logout", name="logout")
      */
     public function logout()

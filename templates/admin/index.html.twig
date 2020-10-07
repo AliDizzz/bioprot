@@ -1,42 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Hello AdminController!
+{% endblock %}
 
 {% block body %}
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">NAME</th>
-      <th scope="col">PRODUCT</th>
-      <th scope="col">PRICE</th>
-      <th scope="col">WEIGHT</th>
-      <th scope="col">QUANTITY</th>
-      <th scope="col">ACTION</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for product in products %}
-    <tr>
-      <th scope="row"> {{ product.id }} </th>
-      <td> {{ product.name }}</td>
-      <td> {{ product.description }} </td>
-      <td> {{product.price | format_currency('EUR') }} </td>
-      <td> {{product.weight }} GR</td>
-      <td> {{ product.stock }} </td>
-      <td> 							<div class="row no-gutters">
-								<a href="{{path('editProduct',{'id': product.id})}}" class="col btn btn-primary">Modifier</a>
-								<form action="{{path('removeProduct',{'id': product.id})}}" method="POST" class="col" onsubmit="return confirm('Confirmer la suppression ?')">
-									<input type="hidden" name="_method" value="SUP">
-									<input type="hidden" name="_token" value="{{csrf_token('SUP' ~ product.id)}}">
-									<input type="submit" class="col btn btn-danger" value="Supprimer">
-								</form>
-							</div> </td>
-    </tr>
-    {% endfor %}  
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">NAME</th>
+				<th scope="col">PRODUCT</th>
+				<th scope="col">PRICE</th>
+				<th scope="col">WEIGHT</th>
+				<th scope="col">QUANTITY</th>
+				<th scope="col">ACTION</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for product in products %}
+				<tr>
+					<th scope="row">
+						{{ product.id }}
+					</th>
+					<td>
+						{{ product.name }}</td>
+					<td>
+						{{ product.description }}
+					</td>
+					<td>
+						{{product.price | format_currency('EUR') }}
+					</td>
+					<td>
+						{{product.weight }}
+						GR</td>
+					<td>
+						{{ product.stock }}
+					</td>
+					<td>
+						<div class="row no-gutters">
+							<a href="{{path('editProduct',{'id': product.id})}}" class="col btn btn-primary">Modifier</a>
+							<form action="{{path('removeProduct',{'id': product.id})}}" method="POST" class="col" onsubmit="return confirm('Confirmer la suppression ?')">
+								<input type="hidden" name="_method" value="SUP">
+								<input type="hidden" name="_token" value="{{csrf_token('SUP' ~ product.id)}}">
+								<input type="submit" class="col btn btn-danger" value="Supprimer">
+							</form>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
 
-  </tbody>
-</table>
+		</tbody>
+	</table>
 
 {% endblock %}

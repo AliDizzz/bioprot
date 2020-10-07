@@ -1,30 +1,34 @@
-.logo{
+
+.logo {
     height: 10vh;
     width: 10vh;
 }
-nav{
+
+nav {
     background-color: #c7ecee;
 }
 
-.nav-link{
+.nav-link {
     color: #130f40;
 }
-.navbar-toggler{
+
+.navbar-toggler {
     background-color: #130f40 !important;
 }
 
-.btn-colorPrimary{
+.btn-colorPrimary {
     background-color: #c7ecee !important;
-    color:#130f40 !important;
+    color: #130f40 !important;
 }
 
-footer{
+footer {
+
     min-height: 30vh;
     background-color: #c7ecee;
     color: #130f40;
     -webkit-tap-highlight-color: transparent;
     line-height: 1.7;
-    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     font-style: normal;
     font-size: 14px;
     box-sizing: border-box;
@@ -36,4 +40,14 @@ footer{
     width: 100%;
     max-width: 1200px;
     padding-top: 15px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.bg{
+    background-image: url("../images/icone/wood.jpg");
+
+
 }

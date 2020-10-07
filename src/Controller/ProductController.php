@@ -11,7 +11,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/product", name="product")
      */
-    public function index( ProductRepository $productRepository )
+    public function index(ProductRepository $productRepository)
     {
         $products = $productRepository->findAll();
 
@@ -20,10 +20,10 @@ class ProductController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/product/{id}", name="onceProduct")
      */
-    public function onceProduct( ProductRepository $productRepository, $id )
+    public function onceProduct(ProductRepository $productRepository, $id)
     {
         $product = $productRepository->find($id);
 

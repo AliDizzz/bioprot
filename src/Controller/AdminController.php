@@ -15,7 +15,7 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="admin")
      */
-    public function index( ProductRepository $productRepository)
+    public function index(ProductRepository $productRepository)
     {
         $products = $productRepository->findAll();
         return $this->render('admin/index.html.twig', [
@@ -23,7 +23,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/admin/addNewProduct", name="addNewProduct")
      * @Route("/admin/editProduct/{id}", name="editProduct", methods="GET|POST")
      */
@@ -46,7 +46,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-            /**
+    /**
      * @Route("/admin/removeProduct/{id}", name="removeProduct", methods="SUP")
      */
     public function addNewProduct(Product $product = null, Request $request, EntityManagerInterface $entityManagerInterface)

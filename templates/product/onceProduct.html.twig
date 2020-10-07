@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductController!{% endblock %}
+{% block title %}Hello ProductController!
+{% endblock %}
 
 {% block body %}
-		<section
+	<section
 		class=" container productslist my-5 col-lg-9 text-center">
 		{# Product section start #}
 		<div class="card mt-4 shadow">
@@ -23,7 +24,7 @@
 					<p class="alert alert-danger" role="alert">
 						Attention il ne reste plus que
 						<strong>{{product.stock}}</strong>
-						miels!
+						produit!
 					</p>
 				{% endif %}
 				<p class="card-text">{{product.description}}</p>
@@ -31,10 +32,10 @@
 				{% if product.stock ==0 %}
 					<button type="button" class="btn shadow btn-colorPrimary" disabled>Non disponible actuellement</button>
 				{% else %}
-					<a href="#" class="btn btn-colorPrimary shadow col">Ajouter au panier</a>
+					<a href="{{ path('cartAdd', {'id': product.id}) }}" class="btn btn-colorPrimary shadow col">Ajouter au panier</a>
 
 				{% endif %}
 			</div>
 		</div>
 		{# Product section finish #}
-{% endblock %}
+	{% endblock %}

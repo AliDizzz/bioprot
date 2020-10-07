@@ -22,8 +22,7 @@ class ProductType extends AbstractType
                 'label' => 'Ajouter une image'
             ])
             ->add('price')
-            ->add('isVegan')
-        ;
+            ->add('isVegan');
     }
 
     public function configureOptions(OptionsResolver $resolver)
