@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -87,6 +89,27 @@ class User implements UserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $hasSubscribedNewsletter;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Newsletter::class, inversedBy="users")
+     */
+    private $newsletter;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Order::class, mappedBy="user")
+     */
+    private $userOrder;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     */
+    private $comment;
+
+    public function __construct()
+    {
+        $this->comment = new ArrayCollection();
+        $this->userOrder = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -187,5 +210,79 @@ class User implements UserInterface
 
     public function getUsername()
     {
+    }
+
+    public function getNewsletter(): ?Newsletter
+    {
+        return $this->newsletter;
+    }
+
+    public function setNewsletter(?Newsletter $newsletter): self
+    {
+        $this->newsletter = $newsletter;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getUserOrder(): Collection
+    {
+        return $this->userOrder;
+    }
+
+    public function addUserOrder(Order $userOrder): self
+    {
+        if (!$this->userOrder->contains($userOrder)) {
+            $this->userOrder[] = $userOrder;
+            $userOrder->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserOrder(Order $userOrder): self
+    {
+        if ($this->userOrder->contains($userOrder)) {
+            $this->userOrder->removeElement($userOrder);
+            // set the owning side to null (unless already changed)
+            if ($userOrder->getUser() === $this) {
+                $userOrder->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComment(): Collection
+    {
+        return $this->comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comment->contains($comment)) {
+            $this->comment[] = $comment;
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comment->contains($comment)) {
+            $this->comment->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

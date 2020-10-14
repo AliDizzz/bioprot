@@ -4,54 +4,101 @@
 {% endblock %}
 
 {% block body %}
-	<section class="row">
-		<div class="col-6 bg">
-			<div class="row d-flex align-items-center text-center">
-				<div class="col-3"><img src="{{ asset('images/icone/vache.png')}}" alt="..."/><p>description</p>
+	<!-- Carousel -->
+	<section>
+		<div class="row align-items-center mr-2 no-gutters">
+			<div id="carouselExampleControls" class="carousel slide col-12 col-md-6" data-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active">
+						<img src="{{ asset('images/caroussel/fitness1.jpg')}}" class="d-block w-100" alt="..."/>
+					</div>
+					<div class="carousel-item">
+						<img src="{{ asset('images/caroussel/fitness2.png')}}" class="d-block w-100" alt="..."/>
+					</div>
+					<div class="carousel-item">
+						<img src="{{ asset('images/caroussel/product1.jpg')}}" class="d-block w-100" alt="..."/>
+					</div>
 				</div>
-				<div class="col-3"><img src="{{ asset('images/icone/noLactose.png')}}" alt="..."/><p>description</p>
-				</div>
-
-				<div class="col-3"><img src="{{ asset('images/icone/proteine.png')}}" alt="..."/><p>description</p>
-				</div>
-				<div class="col-3"><img src="{{ asset('images/icone/soluble.png')}}" alt="..."/><p>description</p>
-				</div>
-
+				<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
 			</div>
-			<hr>
-			<div class="container text-center">
-				<h4>Notre objectif
-				</h4>
-				<p>
-					t’apporter ce qu’il y a de mieux. Plus de bienfaits, les meilleurs ingrédients, délicieusement savoureux, tout en restant au summum de la simplicité. C'est dans notre laboratoire berlinois que nous y arrivons, grâce à nos procédés brevetés, établis par nos nutritionnistes, chimistes alimentaires, et ingénieurs. Le tout pour les produits d'exception que tu as entre les mains. Pour aller plus loin, ensemble.
-				</p>
+			<!--  -->
+			<div class="col-12 col-md-6 container our-values">
+				<div class="row text-center my-5 no-gutters values" id="values">
+					<div class="col-3">
+						<img src="{{ asset('images/icone/vache.png')}}" alt="" class="icone-presentation"/>
+						<p>
+							<strong>
+								protéine animal</strong>
+							issus de l'agriculture bio</p>
+					</div>
+					<div class="col-3">
+						<img src="{{ asset('images/icone/noLactose.png')}}" alt="" class="icone-presentation"/>
+						<p>
+							<strong>
+								sans lactose</strong>
+							sans additifs chimique</p>
+					</div>
+					<div class="col-3">
+						<img src="{{ asset('images/icone/stevia.png')}}" alt="" class="icone-presentation"/>
+						<p>
+							<strong>100% vegetale</strong>
+							avec notre gamme vegan</p>
+					</div>
+					<div class="col-3">
+						<img src="{{ asset('images/icone/soluble.png')}}" alt="" class="icone-presentation"/>
+						<p>
+							<strong>solubilité facile</strong>
+							dans de l'eau ou du lait</p>
+					</div>
+				</div>
+				<hr/>
+				<div class="row text-center my-5 no-gutters" id="pres">
+					<p class="container mx-5">
+						<strong>Notre objectif :
+						</strong>T’apporter ce qu’il y a de mieux. Plus de bienfaits, les meilleurs ingrédients, délicieusement savoureux, tout en restant au summum de la simplicité. 
+						C'est dans notre laboratoire berlinois que nous y arrivons, grâce à nos procédés brevetés, établis par nos nutritionnistes, chimistes alimentaires, et ingénieurs. 
+						Le tout pour les produits d'exception que tu as entre les mains. 
+					</p>
+				</div>
 			</div>
 		</div>
-
-		<div id="carouselExampleControls" class="carousel slide col-6 " data-ride="carousel">
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img src="{{ asset('images/caroussel/fitness1.jpg')}}" class="d-block w-100" alt="...">
-				</div>
-				<div class="carousel-item">
-					<img src="{{ asset('images/caroussel/product1.jpg')}}" class="d-block w-100" alt="...">
-				</div>
-				<div class="carousel-item">
-					<img src="{{ asset('images/caroussel/fitness2.png')}}" class="d-block w-100" alt="...">
-				</div>
-			</div>
-			<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
-		</div>
-
-
 	</section>
 
+	<!-- Section nouveaux produits -->
+	<section class="container pt-4 my-4 new-products">
 
-{% endblock %}
+		<div class="row">
+			{% for product in products %}
+				<div class="col-md-4 mb-5">
+					<div class="card h-100">
+						<img class="card-img-top" src="{{ asset('images/products/'~ product.image)}}" alt=""/>
+						<div class="card-body">
+							<h4 class="card-title">{{product.name}}</h4>
+							<p class="card-text">
+								{{product.description|length >200 ? product.description|slice(0, 200) ~ ' ...' : product.description }}<hr>
+							</p>
+							{% if product.isVegan %}
+							<p class="d-flex justify-content-center align-items-center align-content-around"><img src="{{ asset('images/icone/stevia.png')}}" class="icone-presentation" alt=""><small>100% végétale</small>
+							</p>
+							{% else %}
+							<p class="d-flex justify-content-center align-items-center align-content-around"><img src="{{ asset('images/icone/vache.png')}}" class="icone-presentation" alt=""><small>protéine animal bio</small>
+							</p>
+							{% endif %}
+						</p>
+					</div>
+					<div class="card-footer">
+						<a href="{{ path('onceProduct',{'id': product.id})}}" class="btn btn-primary">Découvrir ce produit!</a>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+</section>{% endblock %}

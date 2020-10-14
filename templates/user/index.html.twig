@@ -1,17 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello UserController!{% endblock %}
+{% block title %}Hello UserController!
+{% endblock %}
 
 {% block body %}
+	<section class="container form-group m-5">
 
-{{ form_start (formUser) }}
+		{{ form_start (formUser) }}
+		{{ form_widget (formUser) }}
+		<div class="form-group form-check">
+			{{ form_row (formUser.hasAcceptedCondition) }}
+		</div>
 
+		<input class="btn btn-colorPrimary" type="submit" value="valider">
 
-
-{{ form_widget (formUser) }}
-
-<input type="submit" value"valider"> 
-
-{{ form_end (formUser) }}
-
+		{{ form_end (formUser) }}
+	</section>
 {% endblock %}

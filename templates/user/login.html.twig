@@ -19,10 +19,16 @@
 								<div class="form-group">
 									<input type="password" class="form-control" placeholder="Mot de passe" required name="_password">
 								</div>
+
 								<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+
+								
 								<button class="col-12 btn btn-colorPrimary shadow btn-lock text-center">
 									Me connecter
-								</button>
+								</button>								
+								<a href="{{ path('creatUser')}}" class="col-12 my-5 btn btn-colorPrimary shadow btn-lock text-center">
+									S'inscrire
+								</a>
 								{% if error %}
 									<div class="alert alert-warning mt-5 text-center">
 										<p>Authentification echouée</p>

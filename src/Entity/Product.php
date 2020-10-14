@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -88,6 +90,21 @@ class Product
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $isVegan;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="product")
+     */
+    private $comment;
+
+    /**
+     * @ORM\OneToOne(targetEntity=orderLine::class, cascade={"persist", "remove"})
+     */
+    private $orderLine;
+
+    public function __construct()
+    {
+        $this->comment = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -198,6 +215,49 @@ class Product
     public function setIsVegan(?bool $isVegan): self
     {
         $this->isVegan = $isVegan;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComment(): Collection
+    {
+        return $this->comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comment->contains($comment)) {
+            $this->comment[] = $comment;
+            $comment->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comment->contains($comment)) {
+            $this->comment->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getProduct() === $this) {
+                $comment->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOrderLine(): ?orderLine
+    {
+        return $this->orderLine;
+    }
+
+    public function setOrderLine(?orderLine $orderLine): self
+    {
+        $this->orderLine = $orderLine;
 
         return $this;
     }
